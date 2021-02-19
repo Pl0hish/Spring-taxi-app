@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>Spent Money</th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td th:text="${user.getId()}">VALUE</td>
+            <td th:text="${user.getName()}">VALUE</td>
+            <td th:text="${user.getSpentMoney()}">VALUE</td>
+        </tr>
+    </table>
+</body>
+</html>

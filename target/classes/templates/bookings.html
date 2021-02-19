@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bookings</title>
+</head>
+<body>
+<h1>Bookings</h1>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>DEPARTUREADDRESS</th>
+        <th>DESTINATIONADDRESS</th>
+    </tr>
+    <tr th:each="order : ${bookings}">
+        <td th:text="${order.getId()}">Onions</td>
+        <td th:text="${order.getDepartureAddress()}">2.41</td>
+        <td th:text="${getDestinationAddress()}">yes</td>
+    </tr>
+</table>
+
+</div>
+</body>
+</html>
