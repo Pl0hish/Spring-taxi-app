@@ -22,14 +22,14 @@ public class CarController {
 //    @GetMapping("/all-cars")
 //    public String getCars(Model model) {
 //
-//        carRepository.save(new Car(4, Car.Category.PREMIUM));
-//        carRepository.save(new Car(4, Car.Category.STANDARD));
-//        carRepository.save(new Car(4, Car.Category.COMFORT));
-//        carRepository.save(new Car(4, Car.Category.PREMIUM));
-//        carRepository.save(new Car(4, Car.Category.BUSINESS));
-//        carRepository.save(new Car(4, Car.Category.ECONOMY));
+//        carRepository.save(new Car(4, Car.Category.PREMIUM, "driver"));
+//        carRepository.save(new Car(4, Car.Category.STANDARD, "driver"));
+//        carRepository.save(new Car(4, Car.Category.COMFORT, "driver"));
+//        carRepository.save(new Car(4, Car.Category.PREMIUM, "driver"));
+//        carRepository.save(new Car(4, Car.Category.BUSINESS, "driver"));
+//        carRepository.save(new Car(4, Car.Category.ECONOMY, "driver"));
 //
 //        model.addAttribute("cars", carRepository.findAll());
-//        return "cars";
+//        return "admin/cars";
 //    }
 }

@@ -19,21 +19,4 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/all-users")
-    public String getUsers(Model model) {
-
-        userService.save(new User("name1"));
-        userService.save(new User("name2"));
-        userService.save(new User("name3"));
-        userService.save(new User("name4"));
-        userService.save(new User("name5"));
-        userService.save(new User("name6"));
-
-        model.addAttribute("users", userService.getUsers());
-
-
-        return "users";
-    }
-
-
 }

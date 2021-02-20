@@ -3,7 +3,12 @@ package com.mnyshenko.taxiSpringApp.model;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 @NoArgsConstructor
@@ -13,21 +18,30 @@ import java.util.Random;
 public class Order {
 
     @Id
+    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Size(min = 5, max = 50)
     private String departureAddress;
 
+    @NotBlank
+    @Size(min = 5, max = 50)
     private String destinationAddress;
 
+    @NotNull
     private Double price;
 
-    @Column(name = "date", columnDefinition = "TIMESTAMP")
+    @NotNull
+    @Getter(AccessLevel.NONE)
     private LocalDateTime date;
 
+    @NotNull
     @ManyToOne
     private Car car;
 
+    @NotNull
     @ManyToOne
     private User user;
 
@@ -57,5 +71,9 @@ public class Order {
         double kilometers = new Random().nextInt(30 - 2 + 1) + 2;
         return getDiscount() *
                 (kilometers * car.getCategory().getKmPrice());
+    }
+
+    public Timestamp getDate() {
+        return Timestamp.valueOf(date.withNano(0));
     }
 }
