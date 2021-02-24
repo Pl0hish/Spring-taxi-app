@@ -19,17 +19,4 @@ public class CarController {
         this.carRepository = carRepository;
     }
 
-//    @GetMapping("/all-cars")
-//    public String getCars(Model model) {
-//
-//        carRepository.save(new Car(4, Car.Category.PREMIUM, "driver"));
-//        carRepository.save(new Car(4, Car.Category.STANDARD, "driver"));
-//        carRepository.save(new Car(4, Car.Category.COMFORT, "driver"));
-//        carRepository.save(new Car(4, Car.Category.PREMIUM, "driver"));
-//        carRepository.save(new Car(4, Car.Category.BUSINESS, "driver"));
-//        carRepository.save(new Car(4, Car.Category.ECONOMY, "driver"));
-//
-//        model.addAttribute("cars", carRepository.findAll());
-//        return "admin/cars";
-//    }
 }

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Users</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="admin/admin-panel :: adin-panel"></div>
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                <a th:text="#{user.id}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='id',
+                direction=${reverseDirection})}">User ID</a>
+            </th>
+            <th>
+                <a th:text="#{first.name}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='firstName',
+                direction=${reverseDirection})}">First Name</a>
+            </th>
+            <th>
+                <a th:text="#{last.name}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='lastName',
+                direction=${reverseDirection})}">Last Name</a>
+            </th>
+            <th>
+                <a th:text="#{email}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='email',
+                direction=${reverseDirection})}">Email</a>
+            </th>
+            <th>
+                <a th:text="#{spent.money}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='spentMoney',
+                direction=${reverseDirection})}">Spent Money</a>
+            </th>
+            <th>
+                <a th:text="#{role}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='role',
+                direction=${reverseDirection})}">Role</a>
+            </th>
+        </tr>
+        <tr th:each="user : ${users}">
+            <td>
+                <a th:href="@{/admin/user/{id}(id=${user.getId()})}" th:text="${user.getId()}">User ID</a>
+            </td>
+            <td th:text="${user.getFirstName()}">First Name</td>
+            <td th:text="${user.getLastName()}">Last Name</td>
+            <td th:text="${user.getEmail()}">Email</td>
+            <td th:text="${user.getSpentMoney()}">Spent Money</td>
+            <td th:text="${user.getRole()}">Role</td>
+        </tr>
+    </table>
+
+    <div th:insert="fragments/pagination :: pagination-bar"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Orders</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="admin/admin-panel :: adin-panel"></div>
+<div class="container">
+    <table class="table table-bordered">
+        <tr>
+            <th>
+                <a th:text="#{order.id}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='id',
+                direction=${reverseDirection})}">Order ID</a>
+            </th>
+            <th>
+                <a th:text="#{user.id}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='userId',
+                direction=${reverseDirection})}">User ID</a>
+            </th>
+            <th>
+                <a th:text="#{car.id}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='carId',
+                direction=${reverseDirection})}">Car ID</a>
+            </th>
+            <th>
+                <a th:text="#{departure.address}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='departureAddress',
+                direction=${reverseDirection})}">Departure Address</a>
+            </th>
+            <th>
+                <a th:text="#{destination.address}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='destinationAddress',
+                direction=${reverseDirection})}">Destination Address</a>
+            </th>
+            <th>
+                <a th:text="#{distance}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='distance',
+                direction=${reverseDirection})}">Distance (km)</a>
+            </th>
+            <th>
+                <a th:text="#{passengers}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='passengers',
+                direction=${reverseDirection})}">Passengers</a>
+            </th>
+            <th>
+                <a th:text="#{price}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='price',
+                direction=${reverseDirection})}">Price</a>
+            </th>
+            <th>
+                <a th:text="#{date}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='date',
+                direction=${reverseDirection})}">Date</a>
+            </th>
+        </tr>
+        <tr th:each="order : ${orders}">
+            <td th:text="${order.getId()}">Order ID</td>
+            <td>
+                <a th:href="@{/admin/user/{id}(id=${order.getUser().getId()})}" th:text="${order.getUser().getId()}">User ID</a>
+            </td>
+            <td>
+                <a th:href="@{/admin/car/{id}(id=${order.getCar().getId()})}" th:text="${order.getCar().getId()}">Car ID</a>
+            </td>
+            <td th:text="${order.getDepartureAddress()}">Departure Address</td>
+            <td th:text="${order.getDestinationAddress()}">Destination Address</td>
+            <td th:text="${order.getDistance()}">Distance (km)</td>
+            <td th:text="${order.getPassengers()}">Passengers</td>
+            <td th:text="${order.getPrice()}">Price</td>
+            <td th:text="${order.getDate()}">Date</td>
+        </tr>
+    </table>
+
+    <div th:insert="fragments/pagination :: pagination-bar"></div>
+</div>
+</body>
+</html>

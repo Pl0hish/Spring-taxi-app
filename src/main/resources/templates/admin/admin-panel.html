@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Admin panel</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<ul th:fragment="adin-panel">
+    <li><a th:href="@{/admin/all-orders}" th:text="#{all.orders}">All orders</a></li>
+    <li><a th:href="@{/admin/all-users}" th:text="#{all.users}">All users</a></li>
+    <li><a th:href="@{/admin/all-cars}" th:text="#{all.cars}">All cars</a></li>
+</ul>
+</body>
+</html>

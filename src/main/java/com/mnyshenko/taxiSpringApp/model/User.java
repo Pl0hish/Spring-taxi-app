@@ -1,44 +1,85 @@
 package com.mnyshenko.taxiSpringApp.model;
 
+import com.mnyshenko.taxiSpringApp.constant.Role;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @NoArgsConstructor
-@Data
+@EqualsAndHashCode
+@Getter
+@Setter
 @Entity
+@ToString
 @Table(name = "users")
-public class User {
+public class User implements UserDetails {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @NotBlank
-    @Size(min = 3, max = 20)
     private String firstName;
-
-    @NotBlank
-    @Size(min = 3, max = 20)
     private String lastName;
-
-    @Email
     private String email;
-
-    @NotNull
-    @Min(value = 0)
+    private String password;
     private Integer spentMoney;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @ToString.Exclude
-    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user",
+            cascade = CascadeType.REMOVE)
     private List<Order> orders;
 
-    public User(String firstName, String lastName, String email) {
+    public User(String firstName,
+                String lastName,
+                String email,
+                String password,
+                Role role) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
+        this.spentMoney = 0;
+        this.role = role;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        SimpleGrantedAuthority authority =
+                new SimpleGrantedAuthority(role.name());
+        return Collections.singletonList(authority);
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

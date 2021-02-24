@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/styles/form.css}" rel="stylesheet">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Make new order</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <form class="form-signin" th:action="@{/make-order}" th:object="${order}" th:method="POST">
+        <p th:text="#{input.departure.address}">Input departure address</p>
+        <label class="sr-only" for="departureAddress"></label>
+        <input placeholder="Departure address" class="form-control" type="text" th:field="*{departureAddress}" id="departureAddress" required autofocus>
+        <span style="color: red" th:if="${#fields.hasErrors('departureAddress')}"
+              th:errors="*{departureAddress}"></span>
+        <br/>
+
+        <p th:text="#{input.destination.address}">Input destination address</p>
+        <label class="sr-only" for="destinationAddress"></label>
+        <input placeholder="Destination address" class="form-control" type="text" th:field="*{destinationAddress}" id="destinationAddress" required autofocus>
+        <span style="color: red" th:if="${#fields.hasErrors('destinationAddress')}"
+              th:errors="*{destinationAddress}"></span>
+        <br/>
+
+        <p th:text="#{input.number.of.passengers}">Input number of passengers</p>
+        <label class="sr-only" for="passengers"></label>
+        <input type="number" class="form-control" th:field="*{passengers}" id="passengers" min="1" max="30">
+        <span style="color: red" th:if="${#fields.hasErrors('passengers')}" th:errors="*{passengers}"></span>
+        <br/>
+
+        <p th:text="#{choose.car.category}">Choose car category</p>
+        <label class="sr-only" for="categories"></label>
+        <select class="form-control" th:field="*{category}" id="categories" name="CATEGORIES">
+            <option th:each="category : ${categories}"
+                    th:value="${category.toString()}"
+                    th:text="${category.toString()}">
+            </option>
+        </select>
+        <br/>
+
+        <button class="btn btn-lg btn-primary btn-block" th:text="#{new-order.submit}" type="submit">submit</button>
+    </form>
+</div>
+
+</body>
+</html>

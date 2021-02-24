@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Profile page</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+
+<div class="container">
+    <table class="table table-bordered caption-top">
+        <caption th:text="#{profile.info}">Your info</caption>
+        <tr>
+            <th th:text="#{user.id}"></th>
+            <td th:text="${user.getId()}"></td>
+        </tr>
+        <tr>
+            <th th:text="#{first.name}"></th>
+            <td th:text="${user.getFirstName()}"></td>
+        </tr>
+        <tr>
+            <th th:text="#{last.name}"></th>
+            <td th:text="${user.getLastName()}"></td>
+        </tr>
+        <tr>
+            <th th:text="#{email}"></th>
+            <td th:text="${user.getEmail()}"></td>
+        </tr>
+        <tr>
+            <th th:text="#{spent.money}"></th>
+            <td th:text="${user.getSpentMoney()}"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

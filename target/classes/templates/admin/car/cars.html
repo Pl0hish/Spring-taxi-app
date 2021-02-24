@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Cars</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div th:replace="admin/admin-panel :: adin-panel"></div>
+<div class="container">
+    <table class="table">
+        <tr>
+            <th>
+                <a th:text="#{car.id}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='id',
+                direction=${reverseDirection})}">Car ID</a>
+            </th>
+            <th>
+                <a th:text="#{driver}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='driver',
+                direction=${reverseDirection})}">Driver</a>
+            </th>
+            <th>
+                <a th:text="#{seats}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='seats',
+                direction=${reverseDirection})}">Seats</a>
+            </th>
+            <th>
+                <a th:text="#{price.per.km}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='price',
+                direction=${reverseDirection})}">Price per km</a>
+            </th>
+            <th>
+                <a th:text="#{category}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='category',
+                direction=${reverseDirection})}">Category</a>
+            </th>
+            <th>
+                <a th:text="#{status}" th:href="@{${#httpServletRequest.requestURI}
+                (page=${currentPage},
+                sortBy='status',
+                direction=${reverseDirection})}">Status</a>
+            </th>
+        </tr>
+        <tr th:each="car : ${cars}">
+            <td>
+                <a th:href="@{/admin/car/{id}(id=${car.getId()})}" th:text="${car.getId()}">Car ID</a>
+            </td>
+            <td th:text="${car.getDriver()}">Driver</td>
+            <td th:text="${car.getSeats()}">Seats</td>
+            <td th:text="${car.getKmPrice()}">Price per km</td>
+            <td th:text="${car.getCategory()}">Category</td>
+            <td th:text="${car.getStatus()}">Status</td>
+        </tr>
+    </table>
+
+    <div th:insert="fragments/pagination :: pagination-bar"></div>
+</div>
+</body>
+</html>

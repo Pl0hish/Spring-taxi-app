@@ -1,85 +1,55 @@
 package com.mnyshenko.taxiSpringApp.contoller;
 
-import com.mnyshenko.taxiSpringApp.model.Order;
+import com.mnyshenko.taxiSpringApp.dto.OrderDTO;
 import com.mnyshenko.taxiSpringApp.model.Car;
-import com.mnyshenko.taxiSpringApp.model.User;
 import com.mnyshenko.taxiSpringApp.service.OrderService;
+import com.mnyshenko.taxiSpringApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
-import java.time.LocalDateTime;
+import javax.validation.Valid;
+
 
 @Controller
-@RequestMapping("/booking")
 public class OrderController {
 
-    private OrderService orderService;
+    private final UserService userService;
+    private final OrderService orderService;
 
     @Autowired
-    public OrderController(OrderService orderService) {
+    public OrderController(UserService userService, OrderService orderService) {
+        this.userService = userService;
         this.orderService = orderService;
     }
 
-    @GetMapping("/new-booking")
-    public String makeBooking() {
-        return "new-booking";
+    @GetMapping("/make-order")
+    public String showMakeOrder(@ModelAttribute("order") OrderDTO orderDTO, Model model) {
+
+        model.addAttribute("categories", Car.Category.values());
+
+        return "/make-order";
     }
 
-    @GetMapping("/all-bookings")
-    public String getBookings(Model model) {
-        Car car = new Car();
-        User user = new User();
 
-        orderService.save(new Order(
-                "Address",
-                "destination Address",
-                10.0,
-                LocalDateTime.now(),
-                car,
-                user
-        ));
 
-        orderService.save(new Order(
-                "Address",
-                "destination Address",
-                15.0,
-                LocalDateTime.now(),
-                car,
-                user
-        ));
+    @PostMapping("/make-order")
+    public String makeOrder(@ModelAttribute("order") @Valid OrderDTO orderDTO,
+                            BindingResult bindingResult,
+                            Model model) {
 
-        orderService.save(new Order(
-                "Address",
-                "destination Address",
-                17.0,
-                LocalDateTime.now(),
-                car,
-                user
-        ));
+        model.addAttribute("categories", Car.Category.values());
 
-        orderService.save(new Order(
-                "Address",
-                "destination Address",
-                24.3,
-                LocalDateTime.now(),
-                car,
-                user
-        ));
+        if (bindingResult.hasErrors()) {
+            return "/make-order";
+        }
 
-        orderService.save(new Order(
-                "Address",
-                "destination Address",
-                10.0,
-                LocalDateTime.now(),
-                car,
-                user
-        ));
+        orderService.createOrder(orderDTO, userService.findUserById(1L));
 
-        model.addAttribute("bookings", orderService.findAll());
-
-        return "bookings";
+        return "main";
     }
 }

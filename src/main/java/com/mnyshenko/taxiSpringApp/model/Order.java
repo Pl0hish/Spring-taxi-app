@@ -3,12 +3,8 @@ package com.mnyshenko.taxiSpringApp.model;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.Random;
 
 @NoArgsConstructor
@@ -18,59 +14,55 @@ import java.util.Random;
 public class Order {
 
     @Id
-    @NotNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
-    @Size(min = 5, max = 50)
     private String departureAddress;
 
-    @NotBlank
-    @Size(min = 5, max = 50)
     private String destinationAddress;
 
-    @NotNull
     private Double price;
 
-    @NotNull
+    private Integer passengers;
+
+    private Integer distance;
+
     @Getter(AccessLevel.NONE)
     private LocalDateTime date;
 
-    @NotNull
     @ManyToOne
     private Car car;
 
-    @NotNull
     @ManyToOne
     private User user;
 
     public Order(String departureAddress,
                  String destinationAddress,
-                 Double price,
-                 LocalDateTime date,
+                 Integer passengers,
                  Car car,
                  User user) {
         this.departureAddress = departureAddress;
         this.destinationAddress = destinationAddress;
-        this.price = price;
-        this.date = date;
+        this.passengers = passengers;
         this.car = car;
         this.user = user;
+        this.date = LocalDateTime.now();
+        this.distance = generateDistance(2, 30);
+        this.price = countPrice();
     }
 
-    public double getDiscount() {
-        if (user.getSpentMoney() > 1000) {
-            return 0.15;
-        }
-
-        return 0.5;
+    public int generateDistance(int from, int to) {
+        return new Random().nextInt(to - from + 1) + from;
     }
 
-    public double getPrice() {
-        double kilometers = new Random().nextInt(30 - 2 + 1) + 2;
-        return getDiscount() *
-                (kilometers * car.getCategory().getKmPrice());
+    public double countDiscount() {
+        return user.getSpentMoney() > 1000 ?
+                0.15 : 0.5;
+    }
+
+    public double countPrice() {
+        return countDiscount() *
+                (distance * car.getCategory().getKmPrice());
     }
 
     public Timestamp getDate() {
