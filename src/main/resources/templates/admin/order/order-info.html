@@ -36,6 +36,10 @@
         <td th:text="${order.getPassengers()}">Passengers</td>
     </tr>
     <tr>
+        <th th:text="#{category}"></th>
+        <td th:text="${order.getCar().getCategory()}">Category</td>
+    </tr>
+    <tr>
         <th th:text="#{price}"></th>
         <td th:text="${order.getPrice()}">Price</td>
     </tr>

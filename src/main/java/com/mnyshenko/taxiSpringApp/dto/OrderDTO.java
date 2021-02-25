@@ -8,6 +8,8 @@ import lombok.Setter;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
+import java.util.List;
+import java.util.Random;
 
 @Getter
 @Setter
@@ -23,24 +25,16 @@ public class OrderDTO {
     @Max(value = 30)
     private int passengers;
 
-    @Setter(AccessLevel.NONE)
-    private String category;
+    private Car.Category category;
 
-    public OrderDTO() {
-        passengers = 1;
+    @Setter(AccessLevel.NONE)
+    private Integer distance;
+
+    public double setDistance() {
+        return this.distance = new Random().nextInt(30 - 2 + 1) + 2;
     }
 
-    public void setCategory(String category) {
-        boolean isValid = false;
-
-        for (Car.Category carCategory : Car.Category.values()) {
-            if (carCategory.name()
-                    .equals(category)) {
-                isValid = true;
-                break;
-            }
-        }
-
-        this.category = isValid ? category : Car.Category.PREMIUM.name();
+    public int getPrice() {
+        return distance * category.getKmPrice();
     }
 }

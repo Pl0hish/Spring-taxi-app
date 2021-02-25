@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 @Controller
@@ -46,9 +45,7 @@ public class AdminController {
                             Model model) {
         int currentPage = pageNo.orElse(1);
         String sort = sortBy.orElse("id");
-        //TODO: REVERSE ORDERING ON PAGE
-        String dir = direction.isEmpty() || direction.get().equalsIgnoreCase("acs") ?
-                "asc" : "desc";
+        String dir = "asc".equalsIgnoreCase(direction.orElse("asc")) ? "asc" : "desc";
 
         Page<Order> page = orderService.getPaginated(currentPage, sort, dir);
         List<Order> orders = page.getContent();
@@ -68,9 +65,7 @@ public class AdminController {
 
         int currentPage = pageNo.orElse(1);
         String sort = sortBy.orElse("id");
-        //TODO: REVERSE ORDERING ON PAGE
-        String dir = direction.isEmpty() || direction.get().equalsIgnoreCase("acs") ?
-                "asc" : "desc";
+        String dir = "asc".equalsIgnoreCase(direction.orElse("asc")) ? "asc" : "desc";
 
         Page<User> page = userService.getPaginated(currentPage, sort, dir);
         List<User> users = page.getContent();
@@ -98,9 +93,7 @@ public class AdminController {
                           Model model) {
         int currentPage = pageNo.orElse(1);
         String sort = sortBy.orElse("id");
-        //TODO: REVERSE ORDERING ON PAGE
-        String dir = direction.isEmpty() || direction.get().equalsIgnoreCase("acs") ?
-                "asc" : "desc";
+        String dir = "asc".equalsIgnoreCase(direction.orElse("asc")) ? "asc" : "desc";
 
         Page<Car> page = carService.getPaginated(currentPage, sort, dir);
         List<Car> cars = page.getContent();

@@ -32,6 +32,29 @@
             <td th:text="${user.getSpentMoney()}"></td>
         </tr>
     </table>
+
+    <table class="table table-bordered caption-top">
+        <caption th:text="#{your.orders}">Your orders</caption>
+        <tr>
+            <th th:text="#{date}">Date</th>
+            <th th:text="#{departure.address}">Departure Address</th>
+            <th th:text="#{destination.address}">Destination Address</th>
+            <th th:text="#{distance}">Distance (km)</th>
+            <th th:text="#{passengers}">Passengers</th>
+            <th th:text="#{category}">Category</th>
+            <th th:text="#{price}">Price</th>
+        </tr>
+
+        <tr th:each="order : ${userOrders}">
+            <td th:text="${order.getDate()}">Date</td>
+            <td th:text="${order.getDepartureAddress()}">Departure Address</td>
+            <td th:text="${order.getDestinationAddress()}">Destination Address</td>
+            <td th:text="${order.getDistance()}">Distance (km)</td>
+            <td th:text="${order.getPassengers()}">Passengers</td>
+            <td th:text="${order.getCar().getCategory()}">Category</td>
+            <td th:text="${order.getPrice()}">Price</td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>

@@ -32,7 +32,9 @@ public class Car {
     @OneToMany(mappedBy = "car")
     private List<Order> order;
 
-    public Car(Integer seats, Category category, String driver) {
+    public Car(Integer seats,
+               Category category,
+               String driver) {
         this.seats = seats;
         this.category = category;
         this.driver = driver;
@@ -41,12 +43,6 @@ public class Car {
     }
 
     public enum Category {
-//        PREMIUM,
-//        BUSINESS,
-//        COMFORT,
-//        STANDARD,
-//        ECONOMY
-
         PREMIUM(20),
         BUSINESS(15),
         COMFORT(10),
@@ -62,7 +58,6 @@ public class Car {
         public int getKmPrice() {
             return kmPrice;
         }
-
     }
 
     public enum Status {

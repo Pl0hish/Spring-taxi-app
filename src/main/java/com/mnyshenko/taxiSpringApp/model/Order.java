@@ -39,6 +39,9 @@ public class Order {
     public Order(String departureAddress,
                  String destinationAddress,
                  Integer passengers,
+                 Integer distance,
+                 Integer price,
+                 Integer spentMoney,
                  Car car,
                  User user) {
         this.departureAddress = departureAddress;
@@ -47,23 +50,10 @@ public class Order {
         this.car = car;
         this.user = user;
         this.date = LocalDateTime.now();
-        this.distance = generateDistance(2, 30);
-        this.price = countPrice();
+        this.distance = distance;
+        this.price = (spentMoney > 1000 ? 0.20 : 1)  * price;
     }
 
-    public int generateDistance(int from, int to) {
-        return new Random().nextInt(to - from + 1) + from;
-    }
-
-    public double countDiscount() {
-        return user.getSpentMoney() > 1000 ?
-                0.15 : 0.5;
-    }
-
-    public double countPrice() {
-        return countDiscount() *
-                (distance * car.getCategory().getKmPrice());
-    }
 
     public Timestamp getDate() {
         return Timestamp.valueOf(date.withNano(0));

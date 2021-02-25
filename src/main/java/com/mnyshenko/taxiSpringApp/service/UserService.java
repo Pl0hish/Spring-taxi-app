@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.mnyshenko.taxiSpringApp.constant.Constants.PAGE_SIZE;
+import static com.mnyshenko.taxiSpringApp.constant.Role.ROLE_USER;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -54,7 +55,7 @@ public class UserService implements UserDetailsService {
                 userDTO.getEmail(),
                 bCryptPasswordEncoder
                         .encode(userDTO.getPassword()),
-                Role.ROLE_USER
+                ROLE_USER
         ));
     }
 

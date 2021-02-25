@@ -2,6 +2,7 @@ package com.mnyshenko.taxiSpringApp.service;
 
 import com.mnyshenko.taxiSpringApp.dao.OrderRepository;
 import com.mnyshenko.taxiSpringApp.dto.OrderDTO;
+import com.mnyshenko.taxiSpringApp.exception.CarException;
 import com.mnyshenko.taxiSpringApp.model.Car;
 import com.mnyshenko.taxiSpringApp.model.Order;
 import com.mnyshenko.taxiSpringApp.model.User;
@@ -15,13 +16,16 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 import static com.mnyshenko.taxiSpringApp.constant.Constants.PAGE_SIZE;
-import static com.mnyshenko.taxiSpringApp.model.Car.Category.BUSINESS;
 
 @Service
 public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CarService carService;
+
+    public void saveOrder(Order order) {
+        orderRepository.save(order);
+    }
 
     @Autowired
     public OrderService(OrderRepository orderRepository, CarService carService) {
@@ -46,23 +50,19 @@ public class OrderService {
                 .get();
     }
 
-    public void createOrder(OrderDTO orderDTO, User user) {
-        Car car = new Car(
-                4,
-                BUSINESS,
-                "Driver");
+    public Order createOrder(OrderDTO orderDTO, User user) throws CarException {
+        Car car = carService.findFirstByCategory(orderDTO.getCategory());
+        int spentMoney = user.getSpentMoney();
 
-        carService.save(car);
-
-        orderRepository.save(
-                new Order(
+        return new Order(
                         orderDTO.getDepartureAddress(),
                         orderDTO.getDestinationAddress(),
                         orderDTO.getPassengers(),
+                        orderDTO.getDistance(),
+                        orderDTO.getPrice(),
+                        spentMoney,
                         car,
-                        user
-                )
-        );
+                        user);
     }
 
 

@@ -3,7 +3,7 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/styles/form.css}" rel="stylesheet">
+    <style th:replace="fragments/styling :: styling"></style>
     <div th:insert="fragments/header :: imports"></div>
     <title>Registration</title>
 </head>
@@ -14,28 +14,28 @@
     <form class="form-signin" th:action="@{/registration}" th:object="${user}" th:method="POST">
         <p th:text="#{input.first.name}">Input First name</p>
         <label class="sr-only" for="firstName"></label>
-        <input placeholder="First name" class="form-control" type="text" th:field="*{firstName}" id="firstName" required autofocus>
+        <input th:placeholder="#{first.name}" class="form-control" type="text" th:field="*{firstName}" id="firstName" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}"></span>
         <br/>
 
         <p th:text="#{input.last.name}">Input Last Name</p>
         <label class="sr-only" for="lastName"></label>
-        <input placeholder="Last name" class="form-control" type="text" th:field="*{lastName}" id="lastName" required autofocus>
+        <input th:placeholder="#{last.name}" class="form-control" type="text" th:field="*{lastName}" id="lastName" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></span>
         <br/>
 
         <p th:text="#{input.email}">Input email</p>
         <label for="email"></label>
-        <input placeholder="Email" class="form-control" type="email" th:field="*{email}" id="email" required autofocus>
+        <input th:placeholder="#{email}" class="form-control" type="email" th:field="*{email}" id="email" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+        <span style="color: red" th:if="${not exception.isEmpty()}" th:text="#{email.exists}">TEXT</span>
         <br/>
 
         <p th:text="#{input.password}">Input password</p>
         <label for="password"></label>
-        <input placeholder="Password" class="form-control" type="text" th:field="*{password}" id="password" required autofocus>
+        <input th:placeholder="#{password}" class="form-control" type="password" th:field="*{password}" id="password" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span>
         <br/>
-
         <button class="btn btn-lg btn-primary btn-block" th:text="#{registration.submit}" type="submit">submit</button>
     </form>
 </div>

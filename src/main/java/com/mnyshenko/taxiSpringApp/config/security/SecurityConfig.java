@@ -1,5 +1,6 @@
 package com.mnyshenko.taxiSpringApp.config.security;
 
+import com.mnyshenko.taxiSpringApp.constant.Role;
 import com.mnyshenko.taxiSpringApp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,8 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import static com.mnyshenko.taxiSpringApp.constant.Role.ROLE_ADMIN;
 
 @Configuration
 @AllArgsConstructor
@@ -25,15 +28,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/registration", "/main", "/error", "/test", "/css/**").permitAll()
+                .antMatchers("/registration", "/main", "/error", "/test").permitAll()
+                .antMatchers("/admin/**").hasRole(ROLE_ADMIN.toString())
                 .anyRequest()
                 .authenticated()
                 .and()
-                .formLogin();
-
-
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .defaultSuccessUrl("/main", true)
+                .failureUrl("/login?error");
     }
-
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {

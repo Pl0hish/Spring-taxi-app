@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link th:href="@{/styles/form.css}" rel="stylesheet">
+    <style th:replace="fragments/styling :: styling"></style>
     <div th:insert="fragments/header :: imports"></div>
     <meta charset="UTF-8">
     <title>Error</title>
@@ -11,7 +11,6 @@
 <div th:insert="fragments/header :: header"></div>
 <div class="form-signin">
     <h1 th:text="#{return.oops}">Oops... page not found</h1>
-    <h1 style="font-size: 40px;" th:text="#{error.404}">404</h1>
     <a href="/main" class="btn btn-lg btn-primary btn-block" th:text="#{return.main}">Return to main page</a>
 </div>
 </body>

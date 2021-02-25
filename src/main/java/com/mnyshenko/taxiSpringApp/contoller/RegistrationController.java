@@ -25,7 +25,8 @@ public class RegistrationController {
 
 
     @GetMapping("/registration")
-    public String showRegistrationPage(@ModelAttribute("user") UserDTO userDTO) {
+    public String showRegistrationPage(@ModelAttribute("user") UserDTO userDTO, Model model) {
+        model.addAttribute("exception", "");
         return "registration";
     }
 
@@ -35,7 +36,7 @@ public class RegistrationController {
             BindingResult bindingResult,
             Model model) {
 
-        model.addAttribute("exception", null);
+        model.addAttribute("exception", "");
 
         if (bindingResult.hasErrors()) {
             return "registration";
@@ -44,10 +45,9 @@ public class RegistrationController {
         try {
             userService.save(userDTO);
         } catch (UserException e) {
-            System.out.println(e.getMessage());
+            model.addAttribute("exception", userDTO.getEmail());
             return "registration";
         }
-
 
         return "redirect:/login";
     }

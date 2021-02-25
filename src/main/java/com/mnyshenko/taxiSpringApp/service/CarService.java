@@ -1,6 +1,7 @@
 package com.mnyshenko.taxiSpringApp.service;
 
 import com.mnyshenko.taxiSpringApp.dao.CarRepository;
+import com.mnyshenko.taxiSpringApp.exception.CarException;
 import com.mnyshenko.taxiSpringApp.model.Car;
 import com.mnyshenko.taxiSpringApp.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,13 @@ public class CarService {
 
         Pageable pageable = PageRequest.of(pageNo - 1, PAGE_SIZE, sort);
         return carRepository.findAll(pageable);
+    }
+
+
+    //TODO make normal car finding
+    public Car findFirstByCategory(Car.Category category) throws CarException {
+        return carRepository.findFirstByCategoryAndStatus(category, Car.Status.AVAILABLE)
+                .orElseThrow(() -> new CarException("No car available with given category"));
     }
 
     public void save(Car car) {

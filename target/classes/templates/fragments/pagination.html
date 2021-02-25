@@ -8,25 +8,25 @@
 <body>
 <div th:fragment="pagination-bar" th:if="${totalPages > 1}">
     <div class="row col-sm-10">
-        <div class="col-sm-2" th:text="'Total rows:' + ${totalItems}">
+        <div class="col-sm-2" th:text="#{total.rows} + ${totalItems}">
         </div>
         <div class="col-sm-1">
                 <span th:each="i : ${#numbers.sequence(1, totalPages)}">
-                    <a th:if="${currentPage != i}" th:href="@{${#httpServletRequest.requestURI}(page=${i})}" th:text="${i}"></a>
-                    <span th:unless="${currentPage != i}" th:text="${i}">lll</span>
+                    <a th:if="${currentPage != i}" th:href="@{${#httpServletRequest.requestURI}(page=${i},sortBy=${sortField},direction=${direction})}" th:text="${i}"></a>
+                    <span th:unless="${currentPage != i}" th:text="${i}">number</span>
                 </span>
         </div>
         <div class="col-sm-1">
-            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=1)}" th:text="First"></a>
+            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=1,sortBy=${sortField},direction=${direction})}" th:text="#{first}">First</a>
         </div>
         <div class="col-sm-1">
-            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage - 1})}" th:text="Previous"></a>
+            <a th:if="${currentPage != 1}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage - 1},sortBy=${sortField},direction=${direction})}" th:text="#{previous}">Previous</a>
         </div>
         <div class="col-sm-1">
-            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage + 1})}" th:text="Next"></a>
+            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${currentPage + 1},sortBy=${sortField},direction=${direction})}" th:text="#{next}">Next</a>
         </div>
         <div class="col-sm-1">
-            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${totalPages})}" th:text="Last"></a>
+            <a th:if="${currentPage < totalPages}" th:href="@{${#httpServletRequest.requestURI}(page=${totalPages},sortBy=${sortField},direction=${direction})}" th:text="#{last}">Last</a>
         </div>
     </div>
 </div>

@@ -12,13 +12,13 @@ import java.security.Principal;
 
 
 @Controller
-public class UserController {
+public class ProfileController {
 
     private final UserService userService;
     private final OrderService orderService;
 
     @Autowired
-    public UserController(UserService userService, OrderService orderService) {
+    public ProfileController(UserService userService, OrderService orderService) {
         this.userService = userService;
         this.orderService = orderService;
     }
@@ -28,6 +28,7 @@ public class UserController {
         User user = userService.findUserByEmail(principal.getName());
 
         model.addAttribute("user" ,user);
+        model.addAttribute("userOrders", orderService.getOrdersByUserId(user.getId()));
 
         return "user/profile-page";
     }

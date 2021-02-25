@@ -2,14 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link th:href="@{/styles/form.css}" rel="stylesheet">
+    <style th:replace="fragments/styling :: styling"></style>
     <div th:replace="fragments/header :: imports"></div>
     <title>Make new order</title>
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-
-<div class="container">
+<div th:if="${confirmation == true}">
+    <div th:replace="fragments/confirmation :: confirmation"></div>
+</div>
+<div th:if="${not confirmation}" class="container">
     <form class="form-signin" th:action="@{/make-order}" th:object="${order}" th:method="POST">
         <p th:text="#{input.departure.address}">Input departure address</p>
         <label class="sr-only" for="departureAddress"></label>
