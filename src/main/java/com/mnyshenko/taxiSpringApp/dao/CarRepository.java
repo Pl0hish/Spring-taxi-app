@@ -11,5 +11,5 @@ public interface CarRepository extends JpaRepository<Car, Long> {
 
     Optional<Car> findCarById(Long id);
 
-    Optional<Car> findFirstByCategoryAndStatus(Car.Category category, Car.Status status);
+    Optional<Car> findFirstByCategoryAndStatusAndSeatsGreaterThanEqual(Car.Category category, Car.Status status, Integer seats);
 }

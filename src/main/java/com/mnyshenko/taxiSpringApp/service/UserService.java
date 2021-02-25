@@ -43,6 +43,11 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll(pageable);
     }
 
+    public void updateSpentMoney(User user, Double price) {
+        user.setSpentMoney(user.getSpentMoney() + price);
+        userRepository.save(user);
+    }
+
     public void save(UserDTO userDTO) throws UserException {
 
         if (userRepository.findUserByEmail(userDTO.getEmail()).isPresent()) {
@@ -53,8 +58,7 @@ public class UserService implements UserDetailsService {
                 userDTO.getFirstName(),
                 userDTO.getLastName(),
                 userDTO.getEmail(),
-                bCryptPasswordEncoder
-                        .encode(userDTO.getPassword()),
+                bCryptPasswordEncoder.encode(userDTO.getPassword()),
                 ROLE_USER
         ));
     }

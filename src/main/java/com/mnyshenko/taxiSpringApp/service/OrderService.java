@@ -23,17 +23,23 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final CarService carService;
+    private final UserService userService;
 
     public void saveOrder(Order order) {
         order.setDate(LocalDateTime.now());
+        userService.updateSpentMoney(order.getUser(), order.getPrice());
+        carService.updateStatus(order.getCar());
         orderRepository.save(order);
     }
 
-    @Autowired
-    public OrderService(OrderRepository orderRepository, CarService carService) {
+    public OrderService(OrderRepository orderRepository, CarService carService, UserService userService) {
         this.orderRepository = orderRepository;
         this.carService = carService;
+        this.userService = userService;
     }
+
+    @Autowired
+
 
     public List<Order> getOrders() {
         return orderRepository.findAll();
@@ -53,8 +59,8 @@ public class OrderService {
     }
 
     public Order createOrder(OrderDTO orderDTO, User user) throws CarException {
-        Car car = carService.findFirstByCategory(orderDTO.getCategory());
-        int spentMoney = user.getSpentMoney();
+        Car car = carService.findFirstByCategory(orderDTO.getCategory(), orderDTO.getPassengers());
+        double spentMoney = user.getSpentMoney();
 
         return new Order(
                         orderDTO.getDepartureAddress(),

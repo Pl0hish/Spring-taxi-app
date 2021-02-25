@@ -12,8 +12,8 @@
     <table class="table table-bordered caption-top">
         <caption th:text="#{cars.prices}">Cars prices</caption>
         <tr>
-            <td th:text="#{category}"></td>
-            <td th:text="#{price.per.km}"></td>
+            <th th:text="#{category}"></th>
+            <th th:text="#{price.per.km}"></th>
         </tr>
         <tr th:each="categorie : ${categories}">
             <td th:text="${categorie.name()}"></td>

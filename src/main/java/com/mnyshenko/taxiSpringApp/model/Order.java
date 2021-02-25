@@ -40,8 +40,8 @@ public class Order {
                  String destinationAddress,
                  Integer passengers,
                  Integer distance,
-                 Integer price,
-                 Integer spentMoney,
+                 Double price,
+                 Double spentMoney,
                  Car car,
                  User user) {
         this.departureAddress = departureAddress;

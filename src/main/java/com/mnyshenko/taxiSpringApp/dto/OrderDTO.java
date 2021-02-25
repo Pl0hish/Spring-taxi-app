@@ -22,8 +22,8 @@ public class OrderDTO {
     private String destinationAddress;
 
     @Min(value = 1, message = "{passengers.error}")
-    @Max(value = 30)
-    private int passengers;
+    @Max(value = 7)
+    private Integer passengers;
 
     private Car.Category category;
 
@@ -34,7 +34,7 @@ public class OrderDTO {
         return this.distance = new Random().nextInt(30 - 2 + 1) + 2;
     }
 
-    public int getPrice() {
-        return distance * category.getKmPrice();
+    public Double getPrice() {
+        return (double) distance * category.getKmPrice();
     }
 }

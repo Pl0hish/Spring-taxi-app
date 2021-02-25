@@ -43,8 +43,13 @@
                 <th th:text="#{category}"></th>
                 <td>
                     <p th:text="${confirmationOrder.getCar().getCategory()}"></p>
-                    <!--TODO INPUT NORMAL VALUE -->
                     <input type="text" th:field="*{car}" readonly="readonly" hidden>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{seats}">Seats</th>
+                <td>
+                    <p th:text="${confirmationOrder.getCar().getSeats()}"></p>
                 </td>
             </tr>
             <tr>

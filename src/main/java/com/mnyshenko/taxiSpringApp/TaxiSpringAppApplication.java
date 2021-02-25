@@ -63,10 +63,11 @@ public class TaxiSpringAppApplication {
 
 			List<Car> cars = new ArrayList<>();
 			Car.Category[] categories = Car.Category.values();
+			int[] seats = {3, 5, 7};
 
 			for (int i = 0; i < 15; i++) {
 				cars.add(new Car(
-						new Random().nextInt(6 - 2 + 1) + 2,
+						seats[new Random().nextInt(3)],
 						categories[new Random().nextInt(5)],
 						"Driver name " + i
 					)
@@ -81,8 +82,8 @@ public class TaxiSpringAppApplication {
 						"Destination address " + i,
 						new Random().nextInt(10 - 1 + 1) + 1,
 						new Random().nextInt(30 - 2 + 1) + 2,
-						new Random().nextInt(200 - 50 + 1) + 50,
-						new Random().nextInt(10 - 1 + 1) + 1,
+						(double)new Random().nextInt(200 - 50 + 1) + 50,
+						(double)new Random().nextInt(10 - 1 + 1) + 1,
 						cars.get(new Random().nextInt(cars.size())),
 						users.get(new Random().nextInt(users.size()))
 						)

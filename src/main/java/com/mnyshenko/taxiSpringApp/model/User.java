@@ -27,7 +27,7 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-    private Integer spentMoney;
+    private Double spentMoney;
 
     @Enumerated(EnumType.STRING)
     private Role role;
@@ -47,7 +47,7 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.spentMoney = 0;
+        this.spentMoney = 0.0;
         this.role = role;
     }
 

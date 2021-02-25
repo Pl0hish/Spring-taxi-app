@@ -37,10 +37,9 @@ public class CarService {
         return carRepository.findAll(pageable);
     }
 
-
-    //TODO make normal car finding
-    public Car findFirstByCategory(Car.Category category) throws CarException {
-        return carRepository.findFirstByCategoryAndStatus(category, Car.Status.AVAILABLE)
+    //TODO to do something)
+    public Car findFirstByCategory(Car.Category category, Integer seats) throws CarException {
+        return carRepository.findFirstByCategoryAndStatusAndSeatsGreaterThanEqual(category, Car.Status.AVAILABLE, seats)
                 .orElseThrow(() -> new CarException("No car available with given category"));
     }
 
@@ -50,5 +49,11 @@ public class CarService {
 
     public Car findCarById(Long id) {
         return carRepository.findCarById(id).get();
+    }
+
+
+    public void updateStatus(Car car) {
+        car.setStatus(Car.Status.ACTIVE);
+        carRepository.save(car);
     }
 }
