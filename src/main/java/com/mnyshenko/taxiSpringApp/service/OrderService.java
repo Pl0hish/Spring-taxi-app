@@ -69,6 +69,10 @@ public class OrderService {
 
 
     public List<Order> getOrdersByUserId(Long id){
+        return orderRepository.findTop5ByUserIdOrderByDateDesc(id).get();
+    }
+
+    public List<Order> getAllOrdersByUserId(Long id){
         return orderRepository.findAllByUserId(id).get();
     }
 

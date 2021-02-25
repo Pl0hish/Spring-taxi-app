@@ -55,6 +55,12 @@
                     <input type="text" th:field="*{user}" readonly="readonly" hidden>
                 </td>
             </tr>
+            <tr>
+                <th th:text="#{car.arrives}">Car arrives</th>
+                <td>
+                    <p th:text="${timeToWait + ' '} + #{minutes}"></p>
+                </td>
+            </tr>
         </table>
         <button class="btn btn-lg btn-primary btn-block" th:text="#{confirm}" type="submit">Confirm</button>
     </form>

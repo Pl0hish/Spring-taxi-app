@@ -15,14 +15,14 @@
     <form class="form-signin" th:action="@{/make-order}" th:object="${order}" th:method="POST">
         <p th:text="#{input.departure.address}">Input departure address</p>
         <label class="sr-only" for="departureAddress"></label>
-        <input placeholder="Departure address" class="form-control" type="text" th:field="*{departureAddress}" id="departureAddress" required autofocus>
+        <input th:placeholder="#{departure.address}" class="form-control" type="text" th:field="*{departureAddress}" id="departureAddress" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('departureAddress')}"
               th:errors="*{departureAddress}"></span>
         <br/>
 
         <p th:text="#{input.destination.address}">Input destination address</p>
         <label class="sr-only" for="destinationAddress"></label>
-        <input placeholder="Destination address" class="form-control" type="text" th:field="*{destinationAddress}" id="destinationAddress" required autofocus>
+        <input th:placeholder="#{destination.address}" class="form-control" type="text" th:field="*{destinationAddress}" id="destinationAddress" required autofocus>
         <span style="color: red" th:if="${#fields.hasErrors('destinationAddress')}"
               th:errors="*{destinationAddress}"></span>
         <br/>
@@ -38,7 +38,7 @@
         <select class="form-control" th:field="*{category}" id="categories" name="CATEGORIES">
             <option th:each="category : ${categories}"
                     th:value="${category.toString()}"
-                    th:text="${category.toString()}">
+                    th:text="${category.toString() + ': ' + category.getKmPrice() + ' '} + #{price.per.km.lowerCase}">
             </option>
         </select>
         <br/>

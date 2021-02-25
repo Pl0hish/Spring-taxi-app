@@ -125,7 +125,7 @@ public class AdminController {
     public String getUser(@PathVariable Long id, Model model) {
 
         model.addAttribute("user" ,userService.findUserById(id));
-        model.addAttribute("userOrders", orderService.getOrdersByUserId(id));
+        model.addAttribute("userOrders", orderService.getAllOrdersByUserId(id));
 
         return "admin/user/user-info";
     }

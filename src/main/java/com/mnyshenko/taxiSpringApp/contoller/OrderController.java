@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import javax.validation.Valid;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 
 @Controller
@@ -62,6 +63,7 @@ public class OrderController {
         try {
             Order order = orderService.createOrder(orderDTO, userService.findUserByEmail(principal.getName()));
             model.addAttribute("confirmationOrder", order);
+            model.addAttribute("timeToWait", new Random().nextInt(20 - 1 + 1) + 1);
             model.addAttribute("confirmation", true);
             return "order/make-order";
         } catch (CarException e) {
