@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.mnyshenko.taxiSpringApp.constant.Constants.PAGE_SIZE;
@@ -24,6 +25,7 @@ public class OrderService {
     private final CarService carService;
 
     public void saveOrder(Order order) {
+        order.setDate(LocalDateTime.now());
         orderRepository.save(order);
     }
 

@@ -14,38 +14,44 @@
             <tr>
                 <th th:text="#{departure.address}"></th>
                 <td>
-                    <input type="text" th:field="*{departureAddress}" readonly="readonly">
+                    <p th:text="${confirmationOrder.getDepartureAddress()}"></p>
+                    <input type="text" th:field="*{departureAddress}" readonly="readonly" hidden>
                 </td>
             </tr>
             <tr>
                 <th th:text="#{destination.address}"></th>
                 <td>
-                    <input type="text" th:field="*{destinationAddress}" readonly="readonly">
+                    <p th:text="${confirmationOrder.getDestinationAddress()}"></p>
+                    <input type="text" th:field="*{destinationAddress}" readonly="readonly" hidden>
                 </td>
             </tr>
             <tr>
                 <th th:text="#{distance}"></th>
                 <td>
-                    <input type="text" th:field="*{distance}" readonly="readonly">
+                    <p th:text="${confirmationOrder.getDistance()}"></p>
+                    <input type="text" th:field="*{distance}" readonly="readonly" hidden>
                 </td>
             </tr>
             <tr>
                 <th th:text="#{passengers}"></th>
                 <td>
-                    <input type="text" th:field="*{passengers}" readonly="readonly">
+                    <p th:text="${confirmationOrder.getPassengers()}"></p>
+                    <input type="text" th:field="*{passengers}" readonly="readonly" hidden>
                 </td>
             </tr>
             <tr>
                 <th th:text="#{category}"></th>
                 <td>
+                    <p th:text="${confirmationOrder.getCar().getCategory()}"></p>
                     <!--TODO INPUT NORMAL VALUE -->
-                    <input type="text" th:field="*{car}" readonly="readonly">
+                    <input type="text" th:field="*{car}" readonly="readonly" hidden>
                 </td>
             </tr>
             <tr>
                 <th th:text="#{price}"></th>
                 <td>
-                    <input type="text" th:field="*{price}" readonly="readonly">
+                    <p th:text="${confirmationOrder.getPrice()}"></p>
+                    <input type="text" th:field="*{price}" readonly="readonly" hidden>
                     <input type="text" th:field="*{user}" readonly="readonly" hidden>
                 </td>
             </tr>

@@ -39,8 +39,7 @@ public class OrderController {
 
     @PostMapping("/order-success")
     public String orderSuccess(@ModelAttribute("confirmationOrder") Order order) {
-        order.setDate(LocalDateTime.now());
-        orderService.saveOrder(order);
+        orderService.saveOrder(order);;
         return "redirect:/profile";
     }
 
