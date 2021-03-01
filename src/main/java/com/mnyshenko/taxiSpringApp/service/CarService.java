@@ -3,7 +3,7 @@ package com.mnyshenko.taxiSpringApp.service;
 import com.mnyshenko.taxiSpringApp.dao.CarRepository;
 import com.mnyshenko.taxiSpringApp.exception.CarException;
 import com.mnyshenko.taxiSpringApp.model.Car;
-import com.mnyshenko.taxiSpringApp.model.Order;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +16,7 @@ import java.util.List;
 import static com.mnyshenko.taxiSpringApp.constant.Constants.PAGE_SIZE;
 
 @Service
+@Log4j2
 public class CarService {
 
     private final CarRepository carRepository;
@@ -37,7 +38,7 @@ public class CarService {
         return carRepository.findAll(pageable);
     }
 
-    //TODO to do something)
+    //TODO to do something
     public Car findFirstByCategory(Car.Category category, Integer seats) throws CarException {
         return carRepository.findFirstByCategoryAndStatusAndSeatsGreaterThanEqual(category, Car.Status.AVAILABLE, seats)
                 .orElseThrow(() -> new CarException("No car available with given category"));

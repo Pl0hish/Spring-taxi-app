@@ -50,7 +50,8 @@ public class UserService implements UserDetailsService {
 
     public void save(UserDTO userDTO) throws UserException {
 
-        if (userRepository.findUserByEmail(userDTO.getEmail()).isPresent()) {
+        if (userRepository.findUserByEmail(userDTO.getEmail())
+                .isPresent()) {
             throw new UserException("User already exists");
         }
 

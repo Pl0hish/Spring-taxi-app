@@ -80,7 +80,7 @@ public class TaxiSpringAppApplication {
 				orders.add(new Order(
 						"Departure address " + i,
 						"Destination address " + i,
-						new Random().nextInt(10 - 1 + 1) + 1,
+						new Random().nextInt(7 - 1 + 1) + 1,
 						new Random().nextInt(30 - 2 + 1) + 2,
 						(double)new Random().nextInt(200 - 50 + 1) + 50,
 						(double)new Random().nextInt(10 - 1 + 1) + 1,
@@ -93,12 +93,9 @@ public class TaxiSpringAppApplication {
 
 			userRepository.saveAll(List.of(user, user1));
 			userRepository.saveAll(users);
-
 			carRepository.saveAll(cars);
-
 			orderRepository.saveAll(orders);
-
-
-		});
+		}
+		);
 	}
 }

@@ -6,6 +6,7 @@ import com.mnyshenko.taxiSpringApp.model.User;
 import com.mnyshenko.taxiSpringApp.service.CarService;
 import com.mnyshenko.taxiSpringApp.service.OrderService;
 import com.mnyshenko.taxiSpringApp.service.UserService;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,7 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
+@Log4j2
 public class AdminController {
 
     private final UserService userService;
@@ -39,7 +41,7 @@ public class AdminController {
     }
 
     @GetMapping("/all-orders")
-    public String getOrders(@RequestParam("page") Optional<Integer> pageNo,
+    public String getAllOrders(@RequestParam("page") Optional<Integer> pageNo,
                             @RequestParam("sortBy") Optional<String> sortBy,
                             @RequestParam("direction") Optional<String> direction,
                             Model model) {
@@ -58,7 +60,7 @@ public class AdminController {
 
 
     @GetMapping("/all-users")
-    public String getUsers(@RequestParam("page") Optional<Integer> pageNo,
+    public String getAllUsers(@RequestParam("page") Optional<Integer> pageNo,
                            @RequestParam("sortBy") Optional<String> sortBy,
                            @RequestParam("direction") Optional<String> direction,
                            Model model) {
@@ -87,10 +89,11 @@ public class AdminController {
 
 
     @GetMapping("/all-cars")
-    public String getCars(@RequestParam("page") Optional<Integer> pageNo,
+    public String getAllCars(@RequestParam("page") Optional<Integer> pageNo,
                           @RequestParam("sortBy") Optional<String> sortBy,
                           @RequestParam("direction") Optional<String> direction,
                           Model model) {
+
         int currentPage = pageNo.orElse(1);
         String sort = sortBy.orElse("id");
         String dir = "asc".equalsIgnoreCase(direction.orElse("asc")) ? "asc" : "desc";
@@ -108,17 +111,9 @@ public class AdminController {
     public String getCar(@PathVariable Long id, Model model) {
 
         model.addAttribute("car" , carService.findCarById(id));
-        model.addAttribute("carsOrders" , orderService.getOrdersByCarId(id));
+        model.addAttribute("carsOrders" , orderService.getAllOrdersByCarId(id));
 
         return "admin/car/car-info";
-    }
-
-    @GetMapping("/order/{id}")
-    public String getOrder(@PathVariable Long id, Model model) {
-
-        model.addAttribute("order" , orderService.findOrderById(id));
-
-        return "admin/order/order-info";
     }
 
     @GetMapping("/user/{id}")

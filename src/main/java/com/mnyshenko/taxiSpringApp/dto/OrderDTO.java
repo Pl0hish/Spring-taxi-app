@@ -5,9 +5,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Random;
 
@@ -16,13 +14,18 @@ import java.util.Random;
 public class OrderDTO {
 
     @Size(min = 5, max = 50, message = "{address.error}")
+    @NotNull
+    @NotBlank
     private String departureAddress;
 
     @Size(min = 5, max = 50, message = "{address.error}")
+    @NotNull
+    @NotBlank
     private String destinationAddress;
 
     @Min(value = 1, message = "{passengers.error}")
     @Max(value = 7)
+    @NotNull
     private Integer passengers;
 
     private Car.Category category;

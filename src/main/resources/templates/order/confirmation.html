@@ -7,8 +7,10 @@
     <title>Confirmation page</title>
 </head>
 <body>
+<div th:replace="fragments/header :: header"></div>
+
 <div th:fragment="confirmation" class="container">
-    <form class="form-signin" th:action="@{/order-success}" th:object="${confirmationOrder}" th:method="POST">
+    <form class="form-signin" th:action="@{/confirmationPage}" th:object="${confirmationOrder}" th:method="POST">
         <table class="table table-bordered caption-top">
             <caption th:text="#{your.order}">Your order</caption>
             <tr>
@@ -47,23 +49,11 @@
                 </td>
             </tr>
             <tr>
-                <th th:text="#{seats}">Seats</th>
-                <td>
-                    <p th:text="${confirmationOrder.getCar().getSeats()}"></p>
-                </td>
-            </tr>
-            <tr>
                 <th th:text="#{price}"></th>
                 <td>
                     <p th:text="${confirmationOrder.getPrice()}"></p>
                     <input type="text" th:field="*{price}" readonly="readonly" hidden>
                     <input type="text" th:field="*{user}" readonly="readonly" hidden>
-                </td>
-            </tr>
-            <tr>
-                <th th:text="#{car.arrives}">Car arrives</th>
-                <td>
-                    <p th:text="${timeToWait + ' '} + #{minutes}"></p>
                 </td>
             </tr>
         </table>

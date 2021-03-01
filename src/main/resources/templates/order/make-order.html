@@ -8,10 +8,7 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div th:if="${confirmation == true}">
-    <div th:replace="fragments/confirmation :: confirmation"></div>
-</div>
-<div th:if="${not confirmation}" class="container">
+<div class="container">
     <form class="form-signin" th:action="@{/make-order}" th:object="${order}" th:method="POST">
         <p th:text="#{input.departure.address}">Input departure address</p>
         <label class="sr-only" for="departureAddress"></label>

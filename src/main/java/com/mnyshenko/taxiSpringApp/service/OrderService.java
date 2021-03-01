@@ -6,6 +6,7 @@ import com.mnyshenko.taxiSpringApp.exception.CarException;
 import com.mnyshenko.taxiSpringApp.model.Car;
 import com.mnyshenko.taxiSpringApp.model.Order;
 import com.mnyshenko.taxiSpringApp.model.User;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import java.util.List;
 import static com.mnyshenko.taxiSpringApp.constant.Constants.PAGE_SIZE;
 
 @Service
+@Log4j2
 public class OrderService {
 
     private final OrderRepository orderRepository;
@@ -32,13 +34,13 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    @Autowired
     public OrderService(OrderRepository orderRepository, CarService carService, UserService userService) {
         this.orderRepository = orderRepository;
         this.carService = carService;
         this.userService = userService;
     }
 
-    @Autowired
 
 
     public List<Order> getOrders() {
@@ -53,14 +55,11 @@ public class OrderService {
         return orderRepository.findAll(pageable);
     }
 
-    public Order findOrderById(Long id) {
-        return orderRepository.findOrderById(id)
-                .get();
-    }
-
     public Order createOrder(OrderDTO orderDTO, User user) throws CarException {
         Car car = carService.findFirstByCategory(orderDTO.getCategory(), orderDTO.getPassengers());
         double spentMoney = user.getSpentMoney();
+
+        orderDTO.setDistance();
 
         return new Order(
                         orderDTO.getDepartureAddress(),
@@ -82,7 +81,7 @@ public class OrderService {
         return orderRepository.findAllByUserId(id).get();
     }
 
-    public List<Order> getOrdersByCarId(Long id) {
+    public List<Order> getAllOrdersByCarId(Long id) {
         return orderRepository.findAllByCarId(id).get();
     }
 }
