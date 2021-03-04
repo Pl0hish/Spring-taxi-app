@@ -6,7 +6,9 @@ import javax.persistence.*;
 import java.util.List;
 
 @NoArgsConstructor
-@Data
+@EqualsAndHashCode
+@Getter
+@Setter
 @Entity
 @Table(name = "cars")
 public class Car {
@@ -14,12 +16,9 @@ public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private Integer seats;
-
+    private int seats;
     private String driver;
-
-    private Integer kmPrice;
+    private int kmPrice;
 
     @Enumerated(EnumType.STRING)
     private Category category;
@@ -27,19 +26,16 @@ public class Car {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    @Getter(AccessLevel.NONE)
-    @ToString.Exclude
     @OneToMany(mappedBy = "car")
-    private List<Order> order;
+    private List<Order> orders;
 
-    public Car(Integer seats,
-               Category category,
-               String driver) {
+    @Builder
+    public Car(int seats, String driver, Category category, Status status) {
         this.seats = seats;
-        this.category = category;
         this.driver = driver;
-        this.status = Status.AVAILABLE;
+        this.category = category;
         this.kmPrice = category.getKmPrice();
+        this.status = status;
     }
 
     public enum Category {

@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Random;
 
 @NoArgsConstructor
 @Data
@@ -21,11 +20,11 @@ public class Order {
 
     private String destinationAddress;
 
-    private Double price;
+    private double price;
 
-    private Integer passengers;
+    private int passengers;
 
-    private Integer distance;
+    private int distance;
 
     @Getter(AccessLevel.NONE)
     private LocalDateTime date;
@@ -36,24 +35,17 @@ public class Order {
     @ManyToOne
     private User user;
 
-    public Order(String departureAddress,
-                 String destinationAddress,
-                 Integer passengers,
-                 Integer distance,
-                 Double price,
-                 Double spentMoney,
-                 Car car,
-                 User user) {
+    @Builder
+    public Order(String departureAddress, String destinationAddress, double price, int passengers, int distance, LocalDateTime date, Car car, User user) {
         this.departureAddress = departureAddress;
         this.destinationAddress = destinationAddress;
+        this.price = price;
         this.passengers = passengers;
+        this.distance = distance;
+        this.date = date;
         this.car = car;
         this.user = user;
-        this.date = LocalDateTime.now();
-        this.distance = distance;
-        this.price = (spentMoney > 1000 ? 0.20 : 1)  * price;
     }
-
 
     public Timestamp getDate() {
         return Timestamp.valueOf(date.withNano(0));

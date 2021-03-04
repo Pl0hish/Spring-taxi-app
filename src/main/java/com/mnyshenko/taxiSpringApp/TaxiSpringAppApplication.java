@@ -13,12 +13,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static com.mnyshenko.taxiSpringApp.constant.Role.ROLE_ADMIN;
-import static com.mnyshenko.taxiSpringApp.constant.Role.ROLE_USER;
+import static com.mnyshenko.taxiSpringApp.model.Role.ROLE_ADMIN;
+import static com.mnyshenko.taxiSpringApp.model.Role.ROLE_USER;
 
 @SpringBootApplication
 public class TaxiSpringAppApplication {
@@ -33,67 +34,95 @@ public class TaxiSpringAppApplication {
 											CarRepository carRepository) {
 		return (args -> {
 			BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-			User user = new User(
-					"Igor",
-					"Mnyshenko",
-					"a",
-					bCryptPasswordEncoder.encode("a"),
-					ROLE_ADMIN
-			);
-
-			User user1 = new User(
-					"Igor",
-					"Mnyshenko",
-					"u",
-					bCryptPasswordEncoder.encode("u"),
-					ROLE_USER
-			);
+			Random random = new Random();
 
 			List<User> users = new ArrayList<>();
 
+			User user = User.builder()
+					.firstName("Igor")
+					.lastName("Mnyshenko")
+					.email("a")
+					.password(bCryptPasswordEncoder.encode("a"))
+					.role(ROLE_ADMIN)
+					.spentMoney(20.0)
+					.build();
+
+			User user1 = User.builder()
+					.firstName("Igor")
+					.lastName("Mnyshenko")
+					.email("u")
+					.password(bCryptPasswordEncoder.encode("u"))
+					.role(ROLE_USER)
+					.spentMoney(20.0)
+					.build();
+
 			for (int i = 0; i < 15; i++) {
-				users.add(new User(
-						"Firs name" + i,
-						"Last name" + i,
-						"email" + i + "@.com",
-						bCryptPasswordEncoder.encode("password"),
-						ROLE_USER
-				));
+				users.add(User.builder()
+						.firstName("Firs name" + i)
+						.lastName("Last name" + i)
+						.email("email" + i + "@.com")
+						.password(bCryptPasswordEncoder.encode("password"))
+						.role(ROLE_USER)
+						.spentMoney(i * 15.0)
+						.build());
 			}
+
+
+			users.add(user);
+			users.add(user1);
+			userRepository.saveAll(users);
 
 			List<Car> cars = new ArrayList<>();
 			Car.Category[] categories = Car.Category.values();
+			Car.Status[] statuses = Car.Status.values();
 			int[] seats = {3, 5, 7};
 
-			for (int i = 0; i < 15; i++) {
-				cars.add(new Car(
-						seats[new Random().nextInt(3)],
-						categories[new Random().nextInt(5)],
-						"Driver name " + i
-					)
-				);
+//			for (int i = 0; i < 15; i++) {
+//				cars.add(Car.builder()
+//						.seats(3)
+//						.category(Car.Category.BUSINESS)
+//						.driver("Driver name " + i)
+//						.status(Car.Status.ACTIVE)
+//						.build());
+//			}
+//
+//			for (int i = 0; i < 15; i++) {
+//				cars.add(Car.builder()
+//						.seats(7)
+//						.category(Car.Category.COMFORT)
+//						.driver("Driver name " + i)
+//						.status(Car.Status.ACTIVE)
+//						.build());
+//			}
+//			carRepository.saveAll(cars);
+
+
+			for (int i = 0; i < 50; i++) {
+				cars.add(Car.builder()
+						.seats(seats[random.nextInt(3)])
+						.category(categories[random.nextInt(5)])
+						.driver("Driver name " + i)
+						.status(statuses[random.nextInt(3)])
+						.build());
 			}
 
+			carRepository.saveAll(cars);
+			LocalDateTime localDateTime = LocalDateTime.now();
 
 			List<Order> orders = new ArrayList<>();
 			for (int i = 0; i < 50; i++) {
-				orders.add(new Order(
-						"Departure address " + i,
-						"Destination address " + i,
-						new Random().nextInt(7 - 1 + 1) + 1,
-						new Random().nextInt(30 - 2 + 1) + 2,
-						(double)new Random().nextInt(200 - 50 + 1) + 50,
-						(double)new Random().nextInt(10 - 1 + 1) + 1,
-						cars.get(new Random().nextInt(cars.size())),
-						users.get(new Random().nextInt(users.size()))
-						)
-				);
+				orders.add(Order.builder()
+						.departureAddress("Departure address " + i)
+						.destinationAddress("Destination address " + i)
+						.passengers(random.nextInt(7 - 1 + 1) + 1)
+						.distance(random.nextInt(30 - 2 + 1) + 2)
+						.price((double)random.nextInt(200 - 50 + 1) + 50)
+						.car(cars.get(random.nextInt(cars.size())))
+						.user(users.get(random.nextInt(users.size())))
+						.date(localDateTime)
+						.build());
 			}
 
-
-			userRepository.saveAll(List.of(user, user1));
-			userRepository.saveAll(users);
-			carRepository.saveAll(cars);
 			orderRepository.saveAll(orders);
 		}
 		);

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <style th:replace="fragments/styling :: styling"></style>
+    <div th:replace="fragments/header :: imports"></div>
+    <title>Alternatives</title>
+</head>
+<body>
+<div th:replace="fragments/header :: header"></div>
+<div class="form-signin">
+    <div th:if="${otherCarOrder.size() > 0}" th:each="order : ${otherCarOrder}">
+        <h2 th:text="#{one.car}">One car...</h2>
+        <table class="table table-bordered caption-top">
+            <tr>
+                <th th:text="#{departure.address}"></th>
+                <td>
+                    <p th:text="${order.getDepartureAddress()}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{destination.address}"></th>
+                <td>
+                    <p th:text="${order.getDestinationAddress()}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{distance}"></th>
+                <td>
+                    <p th:text="${order.getDistance()}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{passengers}"></th>
+                <td>
+                    <p th:text="${order.getPassengers()}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{category}"></th>
+                <td>
+                    <p th:text="${order.getCar().getCategory()}"></p>
+                </td>
+            </tr>
+            <tr>
+                <th th:text="#{price}"></th>
+                <td>
+                    <p th:text="${order.getPrice()}"></p>
+                </td>
+            </tr>
+        </table>
+        <form th:action="@{/alternative-success}" th:method="post">
+            <input name="alternative" value="otherCarOrder" hidden>
+            <button  class="btn btn-lg btn-primary btn-block" th:text="#{confirm}" type="submit">Confirm</button>
+        </form>
+    </div>
+
+<br/>
+
+    <div th:if="${desiredCarsOrder.size() > 1}">
+        <h2 th:text="#{desired.category.cars}">Desired cars...</h2>
+        <div th:each="order : ${desiredCarsOrder}">
+            <table class="table table-bordered caption-top">
+                <tr>
+                    <th th:text="#{departure.address}"></th>
+                    <td>
+                        <p th:text="${order.getDepartureAddress()}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{destination.address}"></th>
+                    <td>
+                        <p th:text="${order.getDestinationAddress()}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{distance}"></th>
+                    <td>
+                        <p th:text="${order.getDistance()}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{passengers}"></th>
+                    <td>
+                        <p th:text="${order.getPassengers()}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{category}"></th>
+                    <td>
+                        <p th:text="${order.getCar().getCategory()}"></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th th:text="#{price}"></th>
+                    <td>
+                        <p th:text="${order.getPrice()}"></p>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <form th:action="@{/alternative-success}" th:method="post">
+            <input name="alternative" value="desiredCarsOrder" hidden>
+            <button  class="btn btn-lg btn-primary btn-block" th:text="#{confirm}" type="submit">Confirm</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

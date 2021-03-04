@@ -7,7 +7,6 @@
 </head>
 <body>
 <div th:replace="fragments/header :: header"></div>
-<div th:replace="admin/admin-panel :: adin-panel"></div>
 <div class="container">
     <table class="table table-bordered">
         <tr>
@@ -69,10 +68,10 @@
         <tr th:each="order : ${orders}">
             <td th:text="${order.getId()}">Order ID</td>
             <td>
-                <a th:href="@{/admin/user/{id}(id=${order.getUser().getId()})}" th:text="${order.getUser().getId()}">User ID</a>
+                <p th:text="${order.getUser().getId()}">User ID</p>
             </td>
             <td>
-                <a th:href="@{/admin/car/{id}(id=${order.getCar().getId()})}" th:text="${order.getCar().getId()}">Car ID</a>
+                <p th:text="${order.getCar().getId()}">Car ID</p>
             </td>
             <td th:text="${order.getDepartureAddress()}">Departure Address</td>
             <td th:text="${order.getDestinationAddress()}">Destination Address</td>

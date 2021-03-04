@@ -1,4 +1,4 @@
-package com.mnyshenko.taxiSpringApp.constant;
+package com.mnyshenko.taxiSpringApp.model;
 
 public enum Role {
     ROLE_USER,

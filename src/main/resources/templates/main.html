@@ -25,11 +25,11 @@
     <p th:text="#{easy.to.use}">Get wherever you need to go as quickly as possible.</p>
 
     <div sec:authorize="isAuthenticated()">
-        <a th:text="#{make.order}" href="make-order" class="btn btn-lg btn-primary btn-block">MAKE ORDER</a>
+        <a th:text="#{make.order}" href="make-order" class="btn btn-lg btn-primary btn-block">MAKE AN ORDER</a>
     </div>
 
     <div sec:authorize="isAnonymous()">
-        <h1 th:text="#{to.make.order}">TO MAKE ORDER</h1>
+        <h1 th:text="#{to.make.order}">TO MAKE AN ORDER</h1>
         <a th:text="#{login}" href="/login" class="btn btn-lg btn-primary btn-block">LOGIN</a>
         <h3 th:text="#{no.account}">NO ACCOUNT?</h3>
         <a th:text="#{register}" href="/registration" class="btn btn-lg btn-primary btn-block">REGISTER</a>

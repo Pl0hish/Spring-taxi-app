@@ -29,15 +29,4 @@ public class OrderDTO {
     private Integer passengers;
 
     private Car.Category category;
-
-    @Setter(AccessLevel.NONE)
-    private Integer distance;
-
-    public double setDistance() {
-        return this.distance = new Random().nextInt(30 - 2 + 1) + 2;
-    }
-
-    public Double getPrice() {
-        return (double) distance * category.getKmPrice();
-    }
 }

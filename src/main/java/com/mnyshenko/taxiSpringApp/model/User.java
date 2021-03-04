@@ -1,6 +1,5 @@
 package com.mnyshenko.taxiSpringApp.model;
 
-import com.mnyshenko.taxiSpringApp.constant.Role;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@ToString
 @Table(name = "users")
 public class User implements UserDetails {
 
@@ -27,27 +25,22 @@ public class User implements UserDetails {
     private String lastName;
     private String email;
     private String password;
-    private Double spentMoney;
+    private double spentMoney;
 
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ToString.Exclude
     @OneToMany(mappedBy = "user",
             cascade = CascadeType.REMOVE)
     private List<Order> orders;
 
-    public User(String firstName,
-                String lastName,
-                String email,
-                String password,
-                Role role) {
-
+    @Builder
+    public User(String firstName, String lastName, String email, String password, double spentMoney, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.spentMoney = 0.0;
+        this.spentMoney = spentMoney;
         this.role = role;
     }
 

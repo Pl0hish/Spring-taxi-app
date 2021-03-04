@@ -1,6 +1,5 @@
 package com.mnyshenko.taxiSpringApp.config.security;
 
-import com.mnyshenko.taxiSpringApp.constant.Role;
 import com.mnyshenko.taxiSpringApp.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -8,12 +7,11 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import static com.mnyshenko.taxiSpringApp.constant.Role.ROLE_ADMIN;
+import static com.mnyshenko.taxiSpringApp.model.Role.ROLE_ADMIN;
 
 @Configuration
 @AllArgsConstructor
@@ -41,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    protected void configure(AuthenticationManagerBuilder auth) {
         auth.authenticationProvider(daoAuthenticationProvider());
     }
 
@@ -49,10 +47,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider() {
         DaoAuthenticationProvider provider
                 = new DaoAuthenticationProvider();
-
         provider.setPasswordEncoder(bCryptPasswordEncoder);
         provider.setUserDetailsService(userService);
-
         return provider;
     }
 }

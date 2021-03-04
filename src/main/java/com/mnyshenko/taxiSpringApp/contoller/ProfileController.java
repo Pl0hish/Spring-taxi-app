@@ -1,34 +1,34 @@
 package com.mnyshenko.taxiSpringApp.contoller;
 
+import com.mnyshenko.taxiSpringApp.model.Order;
 import com.mnyshenko.taxiSpringApp.model.User;
 import com.mnyshenko.taxiSpringApp.service.OrderService;
-import com.mnyshenko.taxiSpringApp.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import java.security.Principal;
+import java.util.List;
 
 
 @Controller
 public class ProfileController {
 
-    private final UserService userService;
     private final OrderService orderService;
 
     @Autowired
-    public ProfileController(UserService userService, OrderService orderService) {
-        this.userService = userService;
+    public ProfileController(OrderService orderService) {
         this.orderService = orderService;
     }
 
     @GetMapping("/profile")
-    public String getUser(Model model, Principal principal) {
-        User user = userService.findUserByEmail(principal.getName());
+    public String getProfile(Model model, Authentication authentication) {
+        User currentUser = (User) authentication.getPrincipal();
+        List<Order> ordersByUserId = orderService.getOrdersByUserId(currentUser.getId());
 
-        model.addAttribute("user" ,user);
-        model.addAttribute("userOrders", orderService.getOrdersByUserId(user.getId()));
+        model.addAttribute("user", currentUser);
+        model.addAttribute("userOrders", ordersByUserId);
 
         return "user/profile-page";
     }
