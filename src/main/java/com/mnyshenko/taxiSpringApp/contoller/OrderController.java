@@ -43,7 +43,7 @@ public class OrderController {
         orderService.saveOrders(alternatives.get(alternative));
         session.removeAttribute("alternatives");
 
-        return "redirect:/success-page";
+        return "redirect:/final-success-page";
     }
 
     @GetMapping("/alternatives")
@@ -75,13 +75,13 @@ public class OrderController {
         return "/order/order-failure";
     }
 
-    @GetMapping("/success-page")
+    @GetMapping("/final-success-page")
     public String showSuccessPage(Model model) {
         model.addAttribute("timeToWait", new Random().nextInt(25 - 1 + 1) + 1);
         return "/order/order-success";
     }
 
-    @GetMapping("/success")
+    @PostMapping("/success")
     public String createOrder(HttpSession session) {
         Order order = (Order) session.getAttribute("confirmationOrder");
 
@@ -97,7 +97,7 @@ public class OrderController {
 
         session.removeAttribute("confirmationOrder");
 
-        return "redirect:/success-page";
+        return "redirect:/final-success-page";
     }
 
     @GetMapping("/confirmationPage")
@@ -129,7 +129,6 @@ public class OrderController {
 
         httpSession.setAttribute("confirmationOrder", order);
         redirectAttributes.addFlashAttribute("confirmationOrder", order);
-        redirectAttributes.addFlashAttribute("categories", Car.Category.values());
 
         return "redirect:/confirmationPage";
     }

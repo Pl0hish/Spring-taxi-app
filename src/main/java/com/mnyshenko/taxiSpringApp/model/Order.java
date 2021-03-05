@@ -15,15 +15,10 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String departureAddress;
-
     private String destinationAddress;
-
     private double price;
-
     private int passengers;
-
     private int distance;
 
     @Getter(AccessLevel.NONE)
